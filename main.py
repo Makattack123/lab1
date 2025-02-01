@@ -14,7 +14,7 @@ def hello_world():
     return 'Hello, World!' # return 'Hello World' in response
     
 #task3    
-@app.route('/students')
+'''@app.route('/students')
 def get_students():
         return jsonify(data)# return student data in response
 
@@ -22,21 +22,47 @@ def get_students():
     # route variables
 @app.route('/students/<id>')
 def get_student(id):
-      for student in data: 
-        if student['id'] == id: # filter out the students without the specified id
-          return jsonify(student)
+    for student in data:
+        if student['id'] == id:  # Match student by ID
+            return jsonify(student)  # Return matched student as JSON
+    return jsonify({"error": "Student not found"}), 404  # Return error if no match
+
 #task5
 @app.route('/students')
-def get_students():
- result = []
-pref = request.args.get('pref') # get the parameter from url
-if pref:
-    for student in data: # iterate dataset
-      if student['pref'] == pref: # select only the students with a given meal preference
-        result.append(student) # add match student to the result
-        return jsonify(result) # return filtered set if parameter is supplied
-     return jsonify(data) # return entire dataset if no parameter supplied
-   
+    result = []
+    pref = request.args.get('pref')  # get the parameter from url
+    if pref:
+        for student in data:  # iterate dataset
+            if student['pref'] == pref:  # select only the students with a given meal preference
+                result.append(student)  # add match student to the result
+        return jsonify(result)  # return filtered set if parameter is supplied
+    return jsonify(data)  # return entire dataset if no parameter supplied
+
+   '''
+
+
+@app.route('/students', methods=['GET'])
+def get_all_students():
+    return jsonify(data)
+
+@app.route('/students/filter', methods=['GET'])
+def get_filtered_students():
+    result = []
+    pref = request.args.get('pref')
+    if pref:
+        for student in data:
+            if student['pref'] == pref:
+                result.append(student)
+        return jsonify(result)
+    return jsonify(data)
+
+@app.route('/students/<id>', methods=['GET'])
+def get_student(id):
+    for student in data:
+        if student['id'] == id:
+            return jsonify(student)
+    return jsonify({"error": "Student not found"}), 404
+
     
 #Exercise 1
 # Define all possible keys
