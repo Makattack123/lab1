@@ -17,7 +17,7 @@ def hello_world():
 '''@app.route('/students')
 def get_students():
         return jsonify(data)# return student data in response
-
+'''
  #task4
     # route variables
 @app.route('/students/<id>')
@@ -29,6 +29,7 @@ def get_student(id):
 
 #task5
 @app.route('/students')
+def get_students():
     result = []
     pref = request.args.get('pref')  # get the parameter from url
     if pref:
@@ -38,30 +39,8 @@ def get_student(id):
         return jsonify(result)  # return filtered set if parameter is supplied
     return jsonify(data)  # return entire dataset if no parameter supplied
 
-   '''
+   
 
-
-@app.route('/students', methods=['GET'])
-def get_all_students():
-    return jsonify(data)
-
-@app.route('/students/filter', methods=['GET'])
-def get_filtered_students():
-    result = []
-    pref = request.args.get('pref')
-    if pref:
-        for student in data:
-            if student['pref'] == pref:
-                result.append(student)
-        return jsonify(result)
-    return jsonify(data)
-
-@app.route('/students/<id>', methods=['GET'])
-def get_student(id):
-    for student in data:
-        if student['id'] == id:
-            return jsonify(student)
-    return jsonify({"error": "Student not found"}), 404
 
     
 #Exercise 1
